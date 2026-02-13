@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DSA Arcade: Production Edition</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./favicon.ico" media="(prefers-color-scheme: dark)"/>
+	<link rel="shortcut icon" href="./favicon.ico" media="(prefers-color-scheme: light)" />
+</head>
+<body class="flex h-screen w-screen overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-72 flex flex-col glass-panel z-20 h-full border-r border-gray-800">
+        <div class="p-5 border-b border-gray-800 bg-slate-900/50">
+            <h1 class="text-xl font-extrabold text-white tracking-tight">DSA <span class="text-sky-400">ARCADE</span></h1>
+            <div class="text-[10px] text-slate-500 font-mono mt-1">PRODUCTION BUILD v2.0</div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto custom-scroll p-3 space-y-6">
+            
+            <div>
+                <h3 class="text-[10px] uppercase font-bold text-slate-500 mb-2 px-2 tracking-wider">Fundamentals</h3>
+                <button data-action="load-module" data-module-id="tutorial" class="btn-sidebar" id="nav-tutorial">Tutorial</button>
+                <button data-action="load-module" data-module-id="bigO" class="btn-sidebar" id="nav-bigO">Big O Notation</button>
+            </div>
+
+            <!-- Section 1: Basic Linear -->
+            <div>
+                <h3 class="text-[10px] uppercase font-bold text-slate-500 mb-2 px-2 tracking-wider">Level 1: Linear Structures</h3>
+                <button data-action="load-module" data-module-id="array" class="btn-sidebar" id="nav-array">Array Operations</button>
+                <button data-action="load-module" data-module-id="stack" class="btn-sidebar" id="nav-stack">Stack (LIFO)</button>
+                <button data-action="load-module" data-module-id="queue" class="btn-sidebar" id="nav-queue">Queue (FIFO)</button>
+                <button data-action="load-module" data-module-id="sll" class="btn-sidebar" id="nav-sll">Singly Linked List</button>
+                <button data-action="load-module" data-module-id="dll" class="btn-sidebar" id="nav-dll">Doubly Linked List</button>
+            </div>
+
+            <!-- Section 2: Recursion & Sorts -->
+            <div>
+                <h3 class="text-[10px] uppercase font-bold text-slate-500 mb-2 px-2 tracking-wider">Level 2: Algorithms</h3>
+                <button data-action="load-module" data-module-id="recursion" class="btn-sidebar" id="nav-recursion">Recursion (Visualized)</button>
+                <button data-action="load-module" data-module-id="sort_bubble" class="btn-sidebar" id="nav-sort_bubble">Bubble Sort</button>
+                <button data-action="load-module" data-module-id="sort_selection" class="btn-sidebar" id="nav-sort_selection">Selection Sort</button>
+                <button data-action="load-module" data-module-id="sort_insertion" class="btn-sidebar" id="nav-sort_insertion">Insertion Sort</button>
+                <button data-action="load-module" data-module-id="sort_quick" class="btn-sidebar" id="nav-sort_quick">Quick Sort</button>
+            </div>
+
+            <!-- Section 3: Non-Linear -->
+            <div>
+                <h3 class="text-[10px] uppercase font-bold text-slate-500 mb-2 px-2 tracking-wider">Level 3: Non-Linear</h3>
+                <button data-action="load-module" data-module-id="bst" class="btn-sidebar" id="nav-bst">Binary Search Tree</button>
+                <button data-action="load-module" data-module-id="graph" class="btn-sidebar" id="nav-graph">Graph (BFS/DFS)</button>
+            </div>
+        </div>
+
+        <!-- Controls Area -->
+        <div class="p-4 border-t border-gray-800 bg-slate-900/30">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs text-slate-400">Simulation Speed</span>
+                <span id="speed-val" class="text-xs text-sky-400 font-mono">1x</span>
+            </div>
+            <input type="range" min="0.5" max="3" step="0.5" value="1" class="w-full h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer" data-action="set-speed">
+        </div>
+    </aside>
+
+    <!-- Main Canvas Area -->
+    <main class="flex-1 relative bg-slate-950">
+        
+        <!-- Header Overlay -->
+        <div class="absolute top-0 left-0 right-0 p-6 pointer-events-none flex justify-between items-start z-10">
+            <div id="tutorial-info-panel" class="glass-panel p-5 rounded-lg max-w-xl pointer-events-auto flex flex-col max-h-[calc(100vh-160px)]">
+                <div class="flex items-center gap-3 mb-2">
+                    <h2 id="module-title" class="text-2xl font-bold text-white">Select a Module</h2>
+                    <span id="complexity-badge" class="px-2 py-0.5 rounded text-[10px] font-mono bg-sky-500/10 text-sky-400 border border-sky-500/20">READY</span>
+                </div>
+                <!-- Dynamic Context Controls (action-bar) moved to the top -->
+                <div id="action-bar" class="mt-4 flex flex-wrap gap-2"></div>
+                <div id="module-desc-container" class="flex-grow overflow-y-auto custom-scroll">
+                    <p id="module-desc" class="text-sm text-slate-400 leading-relaxed">
+                        Interactive Data Structures and Algorithms Laboratory.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Log Console -->
+            <div id="log-console" class="glass-panel p-0 rounded-lg w-80 h-64 flex flex-col pointer-events-auto overflow-auto min-w-[200px] min-h-[100px] max-w-[calc(100vw-350px)] max-h-[calc(100vh-150px)]">
+                <div class="bg-slate-900/50 p-2 border-b border-gray-800 flex justify-between items-center">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Execution Log</span>
+                    <button data-action="log-clear" class="text-[10px] text-slate-400 hover:text-white">CLEAR</button>
+                </div>
+                <div id="code-log" class="flex-1 p-3 overflow-y-auto custom-scroll text-xs space-y-1">
+                    <div class="text-green-500 font-mono">> System Initialized</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3D Canvas -->
+        <div id="canvas-container" class="absolute inset-0 z-0"></div>
+        <div id="labels-layer" class="absolute inset-0 pointer-events-none overflow-hidden z-10"></div>
+
+        <!-- Interaction Tooltip -->
+        <div id="interaction-hint" class="absolute bottom-8 left-1/2 -translate-x-1/2 glass-panel px-4 py-2 rounded-full text-xs text-slate-400 pointer-events-none opacity-0 transition-opacity">
+            Left Click to Select • Right Click to Pan
+        </div>
+
+        <!-- Context Menu (Injected) -->
+        <div id="context-menu"></div>
+    </main>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>

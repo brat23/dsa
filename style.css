@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap');
+
+:root { --glass-bg: rgba(10, 15, 30, 0.95); --glass-border: rgba(56, 189, 248, 0.2); --accent: #38bdf8; }
+body { margin: 0; overflow: hidden; background-color: #020617; font-family: 'Inter', sans-serif; color: #e2e8f0; }
+
+/* UI Components */
+.glass-panel {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 20px -1px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+}
+.btn-sidebar {
+    width: 100%; text-align: left; padding: 10px 12px; margin-bottom: 2px;
+    border-radius: 6px; font-size: 0.85rem; color: #94a3b8; transition: all 0.2s;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.btn-sidebar:hover { background: rgba(56, 189, 248, 0.1); color: #fff; }
+.btn-sidebar.active { background: rgba(56, 189, 248, 0.15); color: var(--accent); border-left: 3px solid var(--accent); }
+
+.btn-primary {
+    background: var(--accent); color: #0f172a; font-weight: 700; padding: 8px 16px; border-radius: 4px;
+    font-size: 0.8rem; transition: transform 0.1s; text-transform: uppercase; letter-spacing: 0.5px;
+    border: 1px solid transparent; /* Ensure consistent border space */
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
+.btn-primary:active { transform: translateY(1px); }
+
+.btn-secondary {
+    background: transparent; border: 1px solid #475569; color: #cbd5e1; padding: 8px 16px; border-radius: 4px;
+    font-size: 0.8rem; transition: all 0.2s; font-weight: 700; /* Match font-weight */
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Context Menu (Right Click / Interaction) */
+#context-menu {
+    position: absolute; display: none; z-index: 100;
+    background: #1e293b; border: 1px solid #475569; border-radius: 6px; padding: 4px;
+    min-width: 120px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+.ctx-item {
+    padding: 8px 12px; font-size: 12px; color: #e2e8f0; cursor: pointer; border-radius: 4px;
+}
+.ctx-item:hover { background: var(--accent); color: #0f172a; }
+
+/* 3D Labels */
+.node-label {
+    position: absolute; width: auto; min-width: 24px; height: 24px;
+    padding: 0 6px; background: rgba(15, 23, 42, 0.9); border: 1px solid var(--accent);
+    color: var(--accent); border-radius: 12px; display: flex; justify-content: center; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: bold;
+    pointer-events: none; z-index: 10; white-space: nowrap;
+}
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.custom-scroll::-webkit-scrollbar { width: 4px; }
+.custom-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
+
+#code-log { font-family: 'JetBrains Mono', monospace; }
+.log-entry { padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.log-entry:last-child { border-bottom: none; }
+
+.memory-label-fixed {
+    position: fixed;
+    bottom: 20px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    border-radius: 12px;
+    padding: 8px 15px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 1000; /* Ensure it's on top */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    pointer-events: none; /* Make sure it doesn't block interaction */
+}
+
+/* Explicit rule for Log Console resizability */
+#log-console {
+    resize: both;
+    overflow: auto;
+}
+
+/* Tooltip for GFX objects */
+#gfx-tooltip {
+    /* glass-panel class already applies background, border, shadow, backdrop-filter */
+    /* text-xs, text-slate-200, px-3, py-2, rounded-lg already applied by className */
+    
+    position: absolute; /* Essential for precise positioning */
+    z-index: 1000;      /* Ensure it's on top of other elements */
+    opacity: 0;         /* Hidden by default */
+    pointer-events: none; /* Do not block mouse events for elements underneath */
+    transition: opacity 0.1s ease-in-out; /* Smooth fade in/out */
+    white-space: nowrap; /* Prevent text wrapping */
+    transform: translate(0, 0); /* Reset transform, if any, for proper positioning */
+}
