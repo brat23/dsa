@@ -8,7 +8,7 @@ Welcome to DSA Arcade, a stunning 3D interactive environment for visualizing fun
 
 ---
 
-## 📖 What It Is
+## 📖 What It Is ?
 
 DSA Arcade is a web-based educational tool that transforms abstract data structures and algorithms into tangible 3D visualizations. Users can select different modules, generate data, and watch in real-time as the algorithms operate on the data structures. It's designed to provide a clear, step-by-step visual representation of how these concepts work under the hood.
 
@@ -49,7 +49,7 @@ This project is an excellent resource for students, developers, and anyone looki
 DSA Arcade is built with a focus on modularity and separation of concerns, using vanilla JavaScript and powerful libraries.
 
 -   **Frontend**: HTML5, JavaScript (ES6 Modules), Tailwind CSS
--   **3D Graphics**: [Three.js](https://threejs.org/)
+-   **3D Graphics**: Three.js
 -   **Controls**: `OrbitControls` for camera manipulation.
 
 ### **Architectural Overview**
